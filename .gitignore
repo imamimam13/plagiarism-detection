@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.poetry/
+poetry.lock
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Database & Storage
+*.db
+*.sqlite3
+storage/
+data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.docker
+!prod.env.example
