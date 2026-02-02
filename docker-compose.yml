@@ -1,4 +1,5 @@
 version: '3.8'
+name: plagiarism_detection
 
 services:
   db:
@@ -37,6 +38,22 @@ services:
     volumes:
       - minio_data:/data
 
+  searxng:
+    image: searxng/searxng:latest
+    container_name: plagiarism_searxng
+    restart: always
+    volumes:
+      - ./backend/searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://searxng:8080/
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+
   frontend:
     build:
       context: .
@@ -59,7 +76,10 @@ services:
     depends_on:
       - db
       - redis
+      - db
+      - redis
       - minio
+      - searxng
     env_file:
       - ./backend/.env.docker
     volumes:

@@ -1,0 +1,106 @@
+# SearXNG Settings for Plagiarism Detection System
+# Focus: Academic, Scientific, and General Web. No Social Media/Images.
+
+use_default_settings: true
+
+general:
+  debug: false
+  instance_name: "Plagiarism SearXNG"
+  donations:
+    url: false
+    text: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "auto"
+  formats:
+    - html
+    - json
+
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "ultrasecretkey" # Change this in production if exposed, but it's internal only
+  limiter: false # Disable rate limiter for internal API usage
+
+# Engines: Enable only relevant ones
+engines:
+  - name: google scholar
+    engine: google_scholar
+    shortcut: gs
+    disabled: false
+    categories: science
+
+  - name: crossref
+    engine: crossref
+    shortcut: cr
+    disabled: false
+    categories: science
+
+  - name: arxiv
+    engine: arxiv
+    shortcut: ar
+    disabled: false
+    categories: science
+  
+  - name: pubmed
+    engine: pubmed
+    shortcut: pm
+    disabled: false
+    categories: science
+
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+    categories: general
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+    categories: general
+
+  - name: yandex
+    engine: yandex
+    shortcut: ya
+    disabled: false
+    categories: general
+  
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wk
+    disabled: false
+    categories: general
+
+  # Disable unwanted categories/engines
+  - name: google images
+    engine: google_images
+    disabled: true
+  
+  - name: bing images
+    engine: bing_images
+    disabled: true
+
+  - name: youtube
+    engine: youtube
+    disabled: true
+
+  - name: twitter
+    engine: twitter
+    disabled: true
+
+categories:
+  - name: general
+    shortcut: general
+  - name: science
+    shortcut: science
+  - name: images
+    disabled: true
+  - name: videos
+    disabled: true
+  - name: news
+    disabled: true
+  - name: social media
+    disabled: true

@@ -1,4 +1,5 @@
 version: '3.8'
+name: plagiarism_detection
 
 services:
   db:
@@ -10,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
       - POSTGRES_DB=${POSTGRES_DB:-plagiarism_db}
     ports:
-      - "5432:5432"
+      - "${PLAG_DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
@@ -19,7 +20,7 @@ services:
     container_name: plagiarism_redis
     restart: always
     ports:
-      - "6379:6379"
+      - "${PLAG_REDIS_PORT:-6379}:6379"
     volumes:
       - redis_data:/data
 
@@ -28,21 +29,36 @@ services:
     container_name: plagiarism_minio
     restart: always
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "${PLAG_MINIO_API_PORT:-9000}:9000"
+      - "${PLAG_MINIO_CONSOLE_PORT:-9001}:9001"
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin}
-    command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: plagiarism_searxng
+    restart: always
+    volumes:
+      - ./backend/searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://searxng:8080/
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
 
   frontend:
     image: ${DOCKER_USERNAME}/plagiarism-frontend:latest
     container_name: plagiarism_frontend
     restart: always
     ports:
-      - "80:80"
+      - "${PLAG_FRONTEND_PORT:-8081}:80"
     depends_on:
       - api
 
@@ -51,11 +67,12 @@ services:
     container_name: plagiarism_api
     restart: always
     ports:
-      - "8000:8000"
+      - "${PLAG_API_PORT:-8001}:8000"
     depends_on:
       - db
       - redis
       - minio
+      - searxng
     env_file:
       - .env
 
