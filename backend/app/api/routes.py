@@ -1,5 +1,5 @@
-from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Body
-from typing import List
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
+
 from app.services.storage import StorageService
 from app.services.parsing import extract_text_from_file
 from app.services.batch_processing import process_batch
@@ -7,13 +7,6 @@ from app.services.ai_detection import AIDetectionService
 from app.services.plagiarism import PlagiarismService
 from app.core.config import settings
 from pydantic import BaseModel
-
-class AICheckRequest(BaseModel):
-    text: str
-
-class PlagiarismCheckRequest(BaseModel):
-    text: str
-
 from app.models.user import User
 from app.models.document import Document
 from app.models.batch import Batch
@@ -24,6 +17,13 @@ from sqlalchemy.orm import Session, aliased
 from sqlalchemy import select
 import uuid
 from io import BytesIO
+
+class AICheckRequest(BaseModel):
+    text: str
+
+class PlagiarismCheckRequest(BaseModel):
+    text: str
+
 
 router = APIRouter()
 storage_service = StorageService()
@@ -96,7 +96,7 @@ async def upload_documents(
     from app.services.archive_extractor import ArchiveExtractor
     import tempfile
     import os
-    from pathlib import Path
+
     
     all_files_to_process = []
     

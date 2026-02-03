@@ -10,7 +10,7 @@ venv/
 pip-log.txt
 pip-delete-this-directory.txt
 .poetry/
-poetry.lock
+
 
 # Node
 node_modules/

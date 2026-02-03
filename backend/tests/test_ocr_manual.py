@@ -2,7 +2,7 @@ import asyncio
 import io
 from fastapi import UploadFile
 from app.services.parsing import extract_text_from_file
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 async def test_ocr():
     # Create a dummy image with text
@@ -21,7 +21,7 @@ async def test_ocr():
     )
     
     # Read content as the service expects
-    content = img_byte_arr.getvalue()
+
     
     print("Testing OCR extraction...")
     # We need to mock the content reading in extract_text_from_file or just call it

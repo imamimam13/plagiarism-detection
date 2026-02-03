@@ -2,7 +2,7 @@ import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
 import os
-from typing import List
+
 
 class OCRService:
     """Service for Optical Character Recognition (OCR)"""

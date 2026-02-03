@@ -1,10 +1,10 @@
 import csv
 import io
-from typing import List, Dict, Any
+from typing import List
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.styles import getSampleStyleSheet
 from app.models.document import Document
 from app.models.batch import Batch
 

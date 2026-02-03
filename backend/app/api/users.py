@@ -8,6 +8,7 @@ from app.core.auth import auth_backend
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
 import uuid
+from app.schemas import UserRead, UserUpdate
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](
     get_user_db,
@@ -16,7 +17,7 @@ fastapi_users = FastAPIUsers[User, uuid.UUID](
 
 router = APIRouter()
 
-from app.schemas import UserRead, UserUpdate
+
 
 router.include_router(
     fastapi_users.get_users_router(UserRead, UserUpdate),
