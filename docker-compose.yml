@@ -56,8 +56,8 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: frontend
+      dockerfile: Dockerfile
     container_name: plagiarism_frontend
     restart: always
     ports:
@@ -67,15 +67,13 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: backend
+      dockerfile: Dockerfile
     container_name: plagiarism_api
     restart: always
     ports:
       - "8000:8000"
     depends_on:
-      - db
-      - redis
       - db
       - redis
       - minio
@@ -87,8 +85,8 @@ services:
 
   celery-worker:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: backend
+      dockerfile: Dockerfile
     container_name: plagiarism_celery_worker
     command: celery -A app.core.celery.app worker -l info
     depends_on:
@@ -101,8 +99,8 @@ services:
 
   celery-beat:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: backend
+      dockerfile: Dockerfile
     container_name: plagiarism_celery_beat
     command: celery -A app.core.celery.app beat -l info
     depends_on:
