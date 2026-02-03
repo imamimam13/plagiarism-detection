@@ -1,4 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
+from typing import List
 
 from app.services.storage import StorageService
 from app.services.parsing import extract_text_from_file
